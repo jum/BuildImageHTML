@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import java.util.*;
+import java.util.prefs.Preferences;
+
 import javax.imageio.*;
 import javax.swing.*;
 
@@ -37,7 +39,12 @@ public class BuildImageHTML {
     static final int THUMB_VERTICAL_GAP = 53;
     static final int THUMB_TITLE_GAP = 1;
     
+    //static final Object interpolation = RenderingHints.VALUE_INTERPOLATION_BILINEAR;
+    static final Object interpolation  = RenderingHints.VALUE_INTERPOLATION_BICUBIC;
+    
     static boolean useGUI = false;
+    static Preferences prefs = Preferences.userNodeForPackage(BuildImageHTML.class);
+    static final String DEFAULT_DIR_KEY = "DefaultDir";
     
     public static void main(String[] args) throws Throwable {
         File theDir;
@@ -46,11 +53,12 @@ public class BuildImageHTML {
         else {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             useGUI = true;
-            JFileChooser fc = new JFileChooser(".");
+            JFileChooser fc = new JFileChooser(prefs.get(DEFAULT_DIR_KEY, "."));
             fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             if (fc.showOpenDialog(null) != JFileChooser.APPROVE_OPTION)
                 System.exit(1);
             theDir = fc.getSelectedFile();
+            prefs.put(DEFAULT_DIR_KEY, theDir.getAbsolutePath());
         }
         if (!useGUI)
             System.out.println("BuildImageHTML:" + theDir);
@@ -82,7 +90,7 @@ public class BuildImageHTML {
             }
             BufferedImage dest = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics2D = dest.createGraphics();
-            graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, interpolation);
             graphics2D.drawImage(src, 0, 0, width, height, null);
             ImageIO.write(dest, "jpeg", new File(loresDir, items[i].getName()));
         }
@@ -123,7 +131,7 @@ public class BuildImageHTML {
         out = new PrintWriter(new FileOutputStream(new File(dir, "index"+index+".html")));
         BufferedImage thumbs = new BufferedImage(THUMB_WIDTH, THUMB_HEIGHT, BufferedImage.TYPE_INT_RGB);
         Graphics2D thumbsG2d = thumbs.createGraphics();
-        thumbsG2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        thumbsG2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, interpolation);
         thumbsG2d.setBackground(Color.WHITE);
         thumbsG2d.setColor(Color.BLACK);
         thumbsG2d.clearRect(0, 0, THUMB_WIDTH, THUMB_HEIGHT);
