@@ -9,38 +9,38 @@
 <property name="DEPRECATION" value="on"/>
 
 <target name="init">
-	<tstamp/>
+    <tstamp/>
 </target>
 
 
 <target name="compile" depends="init">
-	<javac srcdir="${basedir}"
-		debug="${DEBUG}"
-		optimize="${OPTIMIZE}"
-		deprecation="${DEPRECATION}"
-	/>
+    <javac srcdir="${basedir}"
+        debug="${DEBUG}"
+        optimize="${OPTIMIZE}"
+        deprecation="${DEPRECATION}"
+    />
 </target>
 
 <target name="clean">
-	<delete>
-		<fileset dir="${basedir}" includes="**/*.class"/>
-	</delete>
+    <delete>
+        <fileset dir="${basedir}" includes="**/*.class"/>
+    </delete>
 </target>
 
 <target name="clobber" depends="clean">
-	<delete file="${ant.project.name}.jar"/>
+    <delete file="${ant.project.name}.jar"/>
 </target>
 
 <target name="jar" depends="compile">
-	<jar jarfile="${ant.project.name}.jar" basedir="${basedir}">
-		<include name="**/*.class"/>
-		<exclude name="**/*$$Tester.class"/>
-		<manifest>
-			<attribute name="Main-Class"
-				value="org.mager.buildimagehtml.BuildImageHTML"
-			/>
-		</manifest>
-	</jar>
+    <jar jarfile="${ant.project.name}.jar" basedir="${basedir}">
+        <include name="**/*.class"/>
+        <exclude name="**/*$$Tester.class"/>
+        <manifest>
+            <attribute name="Main-Class"
+                value="org.mager.buildimagehtml.BuildImageHTML"
+            />
+        </manifest>
+    </jar>
 </target>
 
 </project>
