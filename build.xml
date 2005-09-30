@@ -2,11 +2,12 @@
 
 <!-- $Id$ -->
 
-<project name="BuildImageHTML" default="jar">
+<project name="BuildImageHTML" default="sign">
 
 <property name="DEBUG" value="off"/>  
 <property name="OPTIMIZE" value="on"/>  
 <property name="DEPRECATION" value="on"/>
+<property file="${user.home}/.ant-sign.properties"/>
 
 <target name="init">
     <tstamp/>
@@ -41,6 +42,13 @@
             />
         </manifest>
     </jar>
+</target>
+
+<target name="sign" depends="jar">
+    <signjar jar="${ant.project.name}.jar"
+        alias="${sign.as}"
+        storepass="${sign.pass}"
+    />
 </target>
 
 </project>

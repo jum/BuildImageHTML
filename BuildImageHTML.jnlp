@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!-- $Id$ -->
+<jnlp 
+  spec="1.0+" 
+  codebase="http://www.mager.org/Java/" 
+  href="BuildImageHTML.jnlp"> 
+  <information> 
+    <title>BuildImageHTML</title> 
+    <vendor>Jens-Uwe Mager</vendor> 
+    <homepage href="http://www.mager.org/Java/"/> 
+    <description>Build HTML Galleries</description> 
+    <description kind="short">Build a simple HTML Gallery from a directory of JPEG files.</description> 
+    <offline-allowed/> 
+  </information> 
+  <security> 
+      <all-permissions/> 
+  </security> 
+  <resources> 
+    <j2se version="1.4+"/> 
+    <jar href="BuildImageHTML.jar"/> 
+  </resources> 
+  <application-desc/>
+</jnlp>
