@@ -6,14 +6,23 @@
 
 package org.mager.buildimagehtml;
 
-import java.awt.*;
-import java.awt.image.*;
-import java.io.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.prefs.Preferences;
 
-import javax.imageio.*;
-import javax.swing.*;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.ProgressMonitor;
+import javax.swing.UIManager;
 
 /**
  * @author jum
@@ -137,9 +146,9 @@ public class BuildImageHTML {
         thumbsG2d.clearRect(0, 0, THUMB_WIDTH, THUMB_HEIGHT);
         FontMetrics metrics = thumbsG2d.getFontMetrics();
         File[] items = dir.listFiles(new ImageFiles());
-        Arrays.sort(items, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                    return ((File)o1).getName().compareToIgnoreCase(((File)o2).getName());
+        Arrays.sort(items, new Comparator<File>() {
+            public int compare(File o1, File o2) {
+                    return o1.getName().compareToIgnoreCase(o2.getName());
             }
         });
         header(out, mainindex, index, items.length >= THUMB_ROWS * THUMB_COLUMNS);
